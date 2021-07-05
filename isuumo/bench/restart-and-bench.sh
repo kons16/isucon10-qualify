@@ -16,5 +16,5 @@ if [ -e alp_kekka.txt ]; then
 fi
 
 sleep 3
-/var/log/nginx/access.log | alp ltsv --sort avg -r >> alp_kekka.txt
+cat /var/log/nginx/access.log | alp ltsv --sort avg -r >> alp_kekka.txt
 
