@@ -1,5 +1,4 @@
 local/
-go/
 env.sh
 .DS_Store
 .*
