@@ -34,7 +34,7 @@ apt-get install -y grafana
 ufw allow 3000
 systemctl start grafana-server
 ### CPU使用率 Query : rate(node_cpu_seconds_total{job="prometheus",mode="system"}[5m]) * 100
-### メモリ使用率　Wuery : node_memory_MemTotal_bytes{instance="localhost:9100",job="prometheus"}
+### メモリ使用率　Query : node_memory_MemTotal_bytes{instance="localhost:9100",job="prometheus"}
 
 
 ### リポジトリに nginx のシンボリックリンクを貼る
