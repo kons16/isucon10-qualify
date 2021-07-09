@@ -2,7 +2,8 @@
 ### 初期セットアップ用
 set -e
 
-apt-get install unzip
+apt-get update
+apt-get install -y unzip
 
 ### alp
 echo "starting alp install...."
@@ -13,7 +14,7 @@ mv alp /usr/local/bin/
 
 ### prometheus
 echo "starting prometheus install...."
-sudo apt-get update
+apt-get update
 apt-get install -y prometheus prometheus-node-exporter
 ufw allow 9090
 systemctl start prometheus.service
