@@ -37,11 +37,13 @@ systemctl start grafana-server
 ### CPU使用率 Query : rate(node_cpu_seconds_total{job="prometheus",mode="system"}[5m]) * 100
 ### メモリ使用率　Query : node_memory_MemTotal_bytes{instance="localhost:9100",job="prometheus"}
 
+### pt-query-digest
+echo "starting pt-query-digest install...."
+apt-get update
+apt-get install -y percona-toolkit
 
 ### リポジトリに nginx のシンボリックリンクを貼る
 echo "nginx のシンボリックリンクを作成中"
 cp -r /etc/nginx /home/isucon/nginx
 rm -rf /etc/nginx/
 ln -s /home/isucon/nginx /etc/nginx
-
-### pt-query-digest
