@@ -5,6 +5,10 @@ set -e
 apt-get update
 apt-get install -y unzip
 
+### git
+apt-get update
+apt-get install git-all
+
 ### alp
 echo "starting alp install...."
 wget https://github.com/tkuchiki/alp/releases/download/v1.0.3/alp_linux_amd64.zip
