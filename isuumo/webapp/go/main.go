@@ -217,6 +217,7 @@ func getEnv(key, defaultValue string) string {
 }
 
 //ConnectDB isuumoデータベースに接続する
+// メソッド
 func (mc *MySQLConnectionEnv) ConnectDB() (*sqlx.DB, error) {
 	dsn := fmt.Sprintf("%v:%v@tcp(%v:%v)/%v", mc.User, mc.Password, mc.Host, mc.Port, mc.DBName)
 	return sqlx.Open("mysql", dsn)
@@ -313,12 +314,20 @@ func initialize(c echo.Context) error {
 	})
 }
 
+// GET /api/chair/:id  getChairDetail 指定したidのchairを全て返す
+// http://localhost:8000/api/chair?id=10
 func getChairDetail(c echo.Context) error {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		c.Echo().Logger.Errorf("Request parameter \"id\" parse error : %v", err)
 		return c.NoContent(http.StatusBadRequest)
 	}
+
+	/*
+	 Go の変数初期化
+		var a int
+		a := 0
+	*/
 
 	chair := Chair{}
 	query := `SELECT * FROM chair WHERE id = ?`
@@ -338,6 +347,7 @@ func getChairDetail(c echo.Context) error {
 	return c.JSON(http.StatusOK, chair)
 }
 
+// POST /api/chair postChair
 func postChair(c echo.Context) error {
 	header, err := c.FormFile("chairs")
 	if err != nil {
@@ -381,6 +391,7 @@ func postChair(c echo.Context) error {
 			c.Logger().Errorf("failed to read record: %v", err)
 			return c.NoContent(http.StatusBadRequest)
 		}
+		// bulk insert すれば、はやくなる
 		_, err := tx.Exec("INSERT INTO chair(id, name, description, thumbnail, price, height, width, depth, color, features, kind, popularity, stock) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)", id, name, description, thumbnail, price, height, width, depth, color, features, kind, popularity, stock)
 		if err != nil {
 			c.Logger().Errorf("failed to insert chair: %v", err)
@@ -814,6 +825,7 @@ func getLowPricedEstate(c echo.Context) error {
 	return c.JSON(http.StatusOK, EstateListResponse{Estates: estates})
 }
 
+// GET /api/recommended_estate/:id
 func searchRecommendedEstateWithChair(c echo.Context) error {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
